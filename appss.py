@@ -153,8 +153,8 @@ if uploaded_files:
             for i, uploaded_file in enumerate(uploaded_files):
                 lines = load_kml_lines(uploaded_file)
                 output_memory = save_to_excel_memory(lines)
-                
-                if output_folder:
+
+                if output_folder:  # หากมีการกำหนดโฟลเดอร์ปลายทาง
                     if not os.path.exists(output_folder):
                         os.makedirs(output_folder)
                     
@@ -164,6 +164,7 @@ if uploaded_files:
                     
                     st.success(f"✅ ไฟล์บันทึกที่ {output_path}")
                 else:
+                    # ให้ดาวน์โหลดไฟล์จาก Streamlit โดยตรง
                     st.download_button(
                         label=f"📥 ดาวน์โหลด {uploaded_file.name.replace('.kml', '.xlsx')}",
                         data=output_memory,
@@ -174,3 +175,4 @@ if uploaded_files:
                 progress_bar.progress((i + 1) / total_files)
 
             status.update(label="✅ เสร็จสิ้น!", state="complete")
+
